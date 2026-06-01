@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surat Keterangan Kelahiran</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <div id="formPage">
+        <form id="birthForm" class="form">
+
+            <table class="header">
+                <tr>
+
+                    <td class="logo-box">
+                        <img src="Logo.png" class="logo" alt="Logo RSI">
+                    </td>
+
+                    <td class="rs-box">
+                        <b>RSI. "SITI HAJAR"</b><br>
+                        Jl. R. Patoh 70 Telp. (031) 8921233<br>
+                        <b>SIDOARJO</b>
+                    </td>
+
+                    <td class="frm-box">
+                        FRM.14
+                    </td>
+
+                </tr>
+            </table>
+
+            <div class="judul">
+                <h2>SURAT KETERANGAN KELAHIRAN</h2>
+
+                <div class="nomor">
+                    No. Kel. <input type="text" name="no_kel" class="fill small" placeholder="No_Kel"> / VK <input type="text" name="vk" class="fill small" placeholder="VK"> / RS / <input type="text" name="rs" class="fill small" placeholder="RS"> / Tahun <input type="text" name="tahun" class="fill small" placeholder="Tahun">
+                </div>
+            </div>
+
+            <div class="isi">
+
+                <div>
+                    <span class="label2">Nama</span>
+                    : <input type="text" name="nama_ibu" class="fill" placeholder="Nama Ibu">
+
+                    <span class="reg">
+                        <b>Reg</b> : <input type="text" name="reg" class="fill small" placeholder="Reg">
+                    </span>
+                </div>
+
+                <div>
+                    <span class="label2">Umur</span>
+                    : <input type="text" name="umur" class="fill small" placeholder="Umur">
+                </div>
+
+                <div>
+                    <span class="label2">Agama</span>
+                    : <input type="text" name="agama" class="fill small" placeholder="Agama">
+                </div>
+
+                <div>
+                    <span class="label2">Nama Suami</span>
+                    : <input type="text" name="nama_suami" class="fill" placeholder="Nama Suami">
+                </div>
+
+                <div>
+                    <span class="label2">Alamat</span>
+                    : <textarea name="alamat" class="fill textarea" placeholder="Alamat"></textarea>
+                </div>
+
+                <div>
+                    <span class="label2">Pada Tanggal</span>
+                    : <input type="date" name="tanggal_lahir" class="fill small date-input">
+                    
+                    <span class="jam">
+                        <b>Pukul</b> : <input type="time" name="jam_lahir" class="fill small time-input"> WIB
+                    </span>
+                </div>
+
+                <div>
+                    <span class="label2">Dibawah Pertolongan</span>
+                    : <input type="text" name="dokter_bidan" class="fill" placeholder="Dokter/Bidan">
+                </div>
+
+                <div>
+                    <span class="label2">Telah Melahirkan Anak</span>
+                    : <select name="jenis_kelamin" class="fill small">
+                        <option value="">Pilih</option>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                    bernama <input type="text" name="nama_bayi" class="fill" placeholder="Nama Bayi">
+                </div>
+
+                <div>
+                    <span class="label2">Berat Badan</span>
+                    : <input type="number" name="berat_badan" class="fill small" placeholder="gram"> gram
+                </div>
+
+                <div>
+                    <span class="label2">Panjang</span>
+                    : <input type="number" name="panjang" class="fill small" placeholder="cm"> cm
+
+                    <span class="lingkar">
+                        <b>Lingkar Dada</b> : <input type="number" name="lingkar_dada" class="fill small" placeholder="cm"> cm
+                    </span>
+
+                    <span class="lingkar">
+                        <b>Lingkar Kepala</b> : <input type="number" name="lingkar_kepala" class="fill small" placeholder="cm"> cm
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="footer">
+
+                Sidoarjo, <input type="date" name="tanggal_surat" class="fill small date-input">
+                <br><br><br><br>
+                <div class="ttd">
+                    Dokter / Bidan
+                </div>
+                <button type="submit" class="btn-submit">Simpan</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="listPage" class="hidden">
+        <div class="judul">
+            <h2>Daftar Data Kelahiran</h2>
+        </div>
+        <div class="result-controls">
+            <button type="button" id="backBtn" class="btn-submit">Tambah Data Baru</button>
+        </div>
+        <div id="dataList" class="result-list"></div>
+    </div>
+
+</div>
+
+<script>
+    const STORAGE_KEY = 'kelahiranData';
+    const formPage = document.getElementById('formPage');
+    const listPage = document.getElementById('listPage');
+    const dataList = document.getElementById('dataList');
+    const birthForm = document.getElementById('birthForm');
+    const backBtn = document.getElementById('backBtn');
+
+    function getSavedData() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    }
+
+    function saveData(list) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function showPage(page) {
+        formPage.classList.toggle('hidden', page === 'list');
+        listPage.classList.toggle('hidden', page === 'form');
+    }
+
+    function formatDate(value) {
+        if (!value) return '';
+        const date = new Date(value);
+        return date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    function renderList() {
+        const entries = getSavedData();
+        if (entries.length === 0) {
+            dataList.innerHTML = '<div class="empty-list">Belum ada data yang disimpan.</div>';
+            return;
+        }
+
+        const rows = entries.map((item, index) => {
+            return `
+                <div class="result-card">
+                    <div class="result-number">${index + 1}. ${item.nama_ibu || 'Nama Ibu kosong'}</div>
+                    <div><strong>Nomor Kel:</strong> ${item.no_kel || '-'}</div>
+                    <div><strong>Nama Bayi:</strong> ${item.nama_bayi || '-'}</div>
+                    <div><strong>Jenis Kelamin:</strong> ${item.jenis_kelamin || '-'}</div>
+                    <div><strong>Tanggal Lahir:</strong> ${formatDate(item.tanggal_lahir)}</div>
+                    <div><strong>Berat:</strong> ${item.berat_badan || '-'} gram</div>
+                    <div><strong>Tanggal Surat:</strong> ${formatDate(item.tanggal_surat)}</div>
+                </div>
+            `;
+        }).join('');
+
+        dataList.innerHTML = rows;
+    }
+
+    function collectFormData() {
+        const formData = new FormData(birthForm);
+        return {
+            no_kel: formData.get('no_kel'),
+            vk: formData.get('vk'),
+            rs: formData.get('rs'),
+            tahun: formData.get('tahun'),
+            nama_ibu: formData.get('nama_ibu'),
+            reg: formData.get('reg'),
+            umur: formData.get('umur'),
+            agama: formData.get('agama'),
+            nama_suami: formData.get('nama_suami'),
+            alamat: formData.get('alamat'),
+            tanggal_lahir: formData.get('tanggal_lahir'),
+            jam_lahir: formData.get('jam_lahir'),
+            dokter_bidan: formData.get('dokter_bidan'),
+            jenis_kelamin: formData.get('jenis_kelamin'),
+            nama_bayi: formData.get('nama_bayi'),
+            berat_badan: formData.get('berat_badan'),
+            panjang: formData.get('panjang'),
+            lingkar_dada: formData.get('lingkar_dada'),
+            lingkar_kepala: formData.get('lingkar_kepala'),
+            tanggal_surat: formData.get('tanggal_surat')
+        };
+    }
+
+    birthForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const list = getSavedData();
+        list.push(collectFormData());
+        saveData(list);
+        birthForm.reset();
+        renderList();
+        showPage('list');
+    });
+
+    backBtn.addEventListener('click', () => showPage('form'));
+
+    renderList();
+</script>
+
+</body>
+</html>

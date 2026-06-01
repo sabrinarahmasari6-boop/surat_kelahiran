@@ -1,0 +1,223 @@
+/* =========================
+   PENGATURAN HALAMAN
+========================= */
+
+@page {
+    size: A4 landscape;
+    margin: 15mm;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: "Times New Roman", serif;
+    font-size: 14px;
+    background-color: #ffffff;
+}
+
+.container {
+    width: 1123px;      /* A4 Landscape */
+    min-height: 794px;
+    margin: auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.header td {
+    border: 1px dashed #999;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.logo-box {
+    width: 120px;
+    text-align: center;
+}
+
+.logo {
+    width: 70px;
+    height: auto;
+}
+
+.rs-box {
+    width: 350px;
+    line-height: 1.4;
+}
+
+.rs-box b:first-child {
+    font-size: 18px;
+}
+
+.frm-box {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+/* =========================
+   JUDUL
+========================= */
+
+.judul {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.judul h2 {
+    margin: 0;
+    font-size: 22px;
+    text-decoration: underline;
+}
+
+.nomor {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* =========================
+   ISI SURAT
+========================= */
+
+.isi {
+    margin-top: 20px;
+    line-height: 2.2;
+}
+
+.fill {
+    border: none;
+    border-bottom: 1px solid #000;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 2px 4px;
+    min-width: 100px;
+}
+
+.fill.small {
+    min-width: 80px;
+}
+
+.textarea {
+    display: inline-block;
+    vertical-align: top;
+    min-width: 250px;
+    min-height: 50px;
+    resize: vertical;
+}
+
+.date-input,
+.time-input,
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    border-bottom: 1px solid #000;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 2px 4px;
+}
+
+.btn-submit {
+    margin-top: 15px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #333;
+    background: #f3f3f3;
+}
+
+
+.label2 {
+    display: inline-block;
+    width: 180px;
+    font-weight: bold;
+}
+
+.reg {
+    margin-left: 300px;
+}
+
+.jam {
+    margin-left: 300px;
+}
+
+.lingkar {
+    margin-left: 60px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    margin-top: 120px;
+    text-align: right;
+    padding-right: 100px;
+}
+
+.ttd {
+    margin-top: 80px;
+}
+
+/* =========================
+   PRINT
+========================= */
+
+@media print {
+
+    body {
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .btn-submit {
+        display: none;
+    }
+
+}
+
+.hidden {
+    display: none;
+}
+
+.result-controls {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.result-list {
+    margin-top: 20px;
+}
+
+.result-card {
+    border: 1px solid #999;
+    padding: 14px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    background: #f9f9f9;
+    line-height: 1.6;
+}
+
+.result-number {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.empty-list {
+    padding: 14px;
+    border: 1px dashed #999;
+    background: #fffbe6;
+}
